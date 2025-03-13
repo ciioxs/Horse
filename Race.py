@@ -6,23 +6,23 @@ from Dice import Dice
 
 
 class Horse:
-    def __init__(self, speed, y, image, window):
-        self.x = 50
-        self.y = y
+    def __init__(self, speed, y_pos, image, window):
+        self.x_pos = 50
+        self.y_pos = y_pos
         self.image = image
         self.dice = Dice(speed)
         self.window = window
 
     def move(self):
         roll_value = self.dice.roll()
-        self.x += roll_value
+        self.x_pos += roll_value
         self.image.move(roll_value, 0)
 
     def draw(self):
         self.image.draw(self.window)
 
-    def crossed_finish_line(self, x):
-        return self.x >= x
+    def crossed_finish_line(self, finish_x):
+        return self.x_pos >= finish_x
 
 
 def main():
