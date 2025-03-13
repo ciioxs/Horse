@@ -1,4 +1,4 @@
-#U1551284 by Yeji Kim
+# U1551284 by Yeji Kim
 
 from graphics import *
 from Dice import Dice
@@ -26,9 +26,11 @@ class Horse:
 
 
 def main():
+    # Set up the window
     win = GraphWin("Horse Race", 700, 350)
     win.setBackground("white")
 
+    # Load horse images (Ensure files exist in the directory)
     try:
         knight_image = Image(Point(50, 100), "Knight.gif")
         wizard_image = Image(Point(50, 200), "Wizard.gif")
@@ -37,11 +39,11 @@ def main():
         win.close()
         return
 
-  
+    # Create Horse objects
     horse1 = Horse(10, 100, knight_image, win)
     horse2 = Horse(12, 200, wizard_image, win)
 
-  
+    # Draw horses and finish line
     horse1.draw()
     horse2.draw()
     finish_line = Line(Point(600, 50), Point(600, 300))
@@ -49,7 +51,7 @@ def main():
     finish_line.setFill("red")
     finish_line.draw(win)
 
-   
+    # Wait for user click to start
     win.getMouse()
 
     # Start the race loop
@@ -59,7 +61,7 @@ def main():
         horse2.move()
         win.update()
 
-    
+    # Determine the winner
     if horse1.crossed_finish_line(600) and horse2.crossed_finish_line(600):
         print("Tie")
     elif horse1.crossed_finish_line(600):
@@ -67,7 +69,7 @@ def main():
     elif horse2.crossed_finish_line(600):
         print("Wizard is the winner!")
 
-   
+    # Wait for final click before closing
     win.getMouse()
     win.close()
 
