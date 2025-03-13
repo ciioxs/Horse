@@ -4,10 +4,9 @@ from graphics import *
 from Dice import Dice
 
 
-
 class Horse:
     def __init__(self, speed, y_pos, image, window):
-        self.x_pos = 50 !=0
+        self.x_pos = 50
         self.y_pos = y_pos
         self.image = image
         self.dice = Dice(speed)
@@ -16,7 +15,7 @@ class Horse:
     def move(self):
         roll_value = self.dice.roll()
         self.x_pos += roll_value
-        self.image.move(roll_value, 0)
+        self.image.move(roll_value, 0)  
 
     def draw(self):
         self.image.draw(self.window)
@@ -66,7 +65,7 @@ def main():
         print("Tie")
     elif horse1.crossed_finish_line(600):
         print("Knight is the winner!")
-    elif horse2.crossed_finish_line(600):
+    else:
         print("Wizard is the winner!")
 
     # Wait for final click before closing
