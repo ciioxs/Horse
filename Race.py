@@ -1,24 +1,30 @@
-# U1551284 by Yeji Kim
-
 from graphics import *
 from Dice import Dice
+import time   
 
 
 class Horse:
-    def __init__(self, speed, y_pos, image, window):
+    def __init__(self, speed, y_pos, image_path, window):
         self.x_pos = 50
         self.y_pos = y_pos
-        self.image = image
-        self.dice = Dice(speed)
         self.window = window
+        self.dice = Dice(speed)
+
+        try:
+            self.image = Image(Point(50, y_pos), image_path)
+        except Exception as e:
+            print(f"Error loading image {image_path}: {e}")
+            self.image = None  
 
     def move(self):
         roll_value = self.dice.roll()
         self.x_pos += roll_value
-        self.image.move(roll_value, 0)  
+        if self.image:
+            self.image.move(roll_value, 0)
 
     def draw(self):
-        self.image.draw(self.window)
+        if self.image:
+            self.image.draw(self.window)
 
     def crossed_finish_line(self, finish_x):
         return self.x_pos >= finish_x
@@ -29,18 +35,9 @@ def main():
     win = GraphWin("Horse Race", 700, 350)
     win.setBackground("white")
 
-    # Load horse images (Ensure files exist in the directory)
-    try:
-        knight_image = Image(Point(50, 100), "Knight.gif")
-        wizard_image = Image(Point(50, 200), "Wizard.gif")
-    except Exception as e:
-        print("Error loading images:", e)
-        win.close()
-        return
-
     # Create Horse objects
-    horse1 = Horse(10, 100, knight_image, win)
-    horse2 = Horse(12, 200, wizard_image, win)
+    horse1 = Horse(10, 100, "Knight.gif", win)
+    horse2 = Horse(12, 200, "Wizard.gif", win)
 
     # Draw horses and finish line
     horse1.draw()
@@ -54,10 +51,14 @@ def main():
     win.getMouse()
 
     # Start the race loop
-    while not horse1.crossed_finish_line(600) and not horse2.crossed_finish_line(600):
+    while True:
         time.sleep(0.5)
         horse1.move()
         horse2.move()
+
+        if horse1.crossed_finish_line(600) or horse2.crossed_finish_line(600):
+            break   
+
         win.update()
 
     # Determine the winner
