@@ -4,7 +4,7 @@ import time
 
 class Horse:
     def __init__(self, speed, y_pos, image_path, window):
-        self.x_pos = 50  # 출발 지점 x 좌표
+        self.x_pos = 0   
         self.y_pos = y_pos
         self.window = window
         self.dice = Dice(speed)
